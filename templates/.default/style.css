@@ -1,0 +1,407 @@
+#water-drainage-calculator .container.no-padding {
+    padding: 0;
+}
+
+#water-drainage-calculator div.timeline-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+#water-drainage-calculator div.timeline-wrapper div.line-left {
+    width: 50%;
+    float: left;
+    height: 1px;
+    border-bottom: 2px solid #DCDCDA;
+    margin-top: 30px;
+}
+
+#water-drainage-calculator div.timeline-wrapper div.line-right {
+    width: 50%;
+    float: right;
+    height: 1px;
+    border-bottom: 2px solid #DCDCDA;
+    margin-top: 30px;
+}
+
+#water-drainage-calculator div.timeline-wrapper div.step-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+#water-drainage-calculator div.timeline-step-1, #water-drainage-calculator div.timeline-step-2, #water-drainage-calculator div.timeline-step-3 {
+    width: 70px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#water-drainage-calculator div.timeline-step-1 {
+    margin-left: -35px;
+}
+
+#water-drainage-calculator div.timeline-step-3 {
+    margin-right: -35px;
+}
+
+#water-drainage-calculator div.timeline-wrapper div.step-container img.radio-image {
+    margin-top: -25px;
+}
+
+#water-drainage-calculator div.timeline-wrapper div.step-container div.step-number {
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+    color: #B8B9B6;
+}
+
+#water-drainage-calculator div.timeline-wrapper div.step-container div.step-name {
+    font-size: 22px;
+    font-weight: 600;
+    font-family: 'Museo Cyrl';
+    color: #B8B9B6;
+}
+
+#water-drainage-calculator div.timeline-wrapper.timeline-wrapper-step-1 div.step-container div.timeline-step-1 div.step-name {
+    color: #0A74B7;
+}
+
+#water-drainage-calculator div.timeline-wrapper.timeline-wrapper-step-2 div.line-left {
+    border-bottom: 2px solid #0A74B7;
+}
+
+#water-drainage-calculator div.timeline-wrapper.timeline-wrapper-step-2 div.step-container div.timeline-step-1 div.step-name {
+    color: #0A74B7;
+    opacity: .5;
+}
+
+#water-drainage-calculator div.timeline-wrapper.timeline-wrapper-step-2 div.step-container div.timeline-step-2 div.step-name {
+    color: #0A74B7;
+}
+
+#water-drainage-calculator div.timeline-wrapper.timeline-wrapper-step-3 div.line-left,
+#water-drainage-calculator div.timeline-wrapper.timeline-wrapper-step-3 div.line-right {
+    border-bottom: 2px solid #0A74B7;
+}
+
+#water-drainage-calculator div.timeline-wrapper.timeline-wrapper-step-3 div.step-container div.timeline-step-1 div.step-name,
+#water-drainage-calculator div.timeline-wrapper.timeline-wrapper-step-3 div.step-container div.timeline-step-2 div.step-name {
+    color: #0A74B7;
+    opacity: .5;
+}
+
+#water-drainage-calculator div.timeline-wrapper.timeline-wrapper-step-3 div.step-container div.timeline-step-3 div.step-name {
+    color: #0A74B7;
+}
+
+#water-drainage-calculator div.step-2, #water-drainage-calculator div.step-3,
+#water-drainage-calculator .email-result-send, #water-drainage-calculator .email-send-alert {
+    display: none;
+}
+
+#water-drainage-calculator p.step-header {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#water-drainage-calculator h4.step-header {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#water-drainage-calculator p.step-description {
+    font-family: 'Inter', sans-serif;
+    margin: 30px 0 40px;
+}
+
+#water-drainage-calculator div.input-group {
+    font-family: 'Inter', sans-serif;
+    margin-top: -10px;
+}
+
+#water-drainage-calculator input[type='checkbox'] + label {
+    cursor: pointer;
+}
+
+#water-drainage-calculator label.form-label {
+    z-index: 1;
+    position: relative;
+    background: #fff;
+    margin: 0 10px;
+    max-width: 65%;
+    padding: 0 5px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2em;
+    font-family: 'Inter', sans-serif;
+}
+
+#water-drainage-calculator label.form-label.active {
+    color: #0A74B7;
+}
+
+#water-drainage-calculator label.form-label.error {
+    color: #E6615E;
+}
+
+#water-drainage-calculator input.form-control-lg {
+    border-radius: 0;
+    border-color: #DCDCDA;
+    border-right: none;
+    z-index: 0;
+    font-weight: 300;
+}
+
+#water-drainage-calculator input.form-control-lg.active {
+    border-color: #0A74B7;
+}
+
+#water-drainage-calculator input.form-control-lg.error {
+    border-color: #E6615E;
+}
+
+#water-drainage-calculator input.form-control::placeholder {
+    color: #B8B9B6;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+#water-drainage-calculator span.input-group-text {
+    border-radius: 0;
+    background-color: #F6F6F6;
+    border-left: none;
+    color: #81817E;
+    font-weight: 300;
+}
+
+#water-drainage-calculator span.input-group-text.active {
+    border-color: #0A74B7;
+}
+
+#water-drainage-calculator input.form-control-lg.error + span.input-group-text {
+    border-color: #E6615E;
+    background-color: rgba(230, 97, 94, 0.15);;
+}
+
+#water-drainage-calculator div.errors {
+    margin: -10px auto 10px;
+    font-family: 'Inter', sans-serif;
+    color: #E6615E;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+#water-drainage-calculator div.line {
+    height: 1px;
+    border-top: 1px solid #0A74B7;
+}
+
+#water-drainage-calculator div.surface-total {
+    text-align: right;
+    color: #0a74b7;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+#water-drainage-calculator a.step-1-next {
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+}
+
+#water-drainage-calculator div.step-2 img.ruler {
+    padding-left: 5px;
+}
+
+#water-drainage-calculator div.rgis-map-wrapper {
+    background: #FFFFFF;
+    box-shadow: 0 0 5px rgb(0 0 0 / 5%), 0 25px 35px rgb(0 0 0 / 3%);
+}
+
+#water-drainage-calculator div.rgis-map-wrapper div.distance-wrapper {
+    margin: 0 20px;
+    padding-bottom: 4px;
+}
+
+#water-drainage-calculator table.calc-result {
+    border-collapse: collapse;
+}
+
+#water-drainage-calculator div.open-type div.table-wrapper {
+    padding: 20px 0;
+    border: 1px solid #6BC4CB;
+}
+
+#water-drainage-calculator div.closed-type div.table-wrapper {
+    padding: 20px 0;
+    border: 1px solid #0A74B7;
+}
+
+#water-drainage-calculator div.open-type table.calc-result td, #water-drainage-calculator div.closed-type table.calc-result td {
+    width: 15%;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    padding: 14px;
+    border-right: 1px solid #DCDCDA;
+    border-bottom: 1px solid #DCDCDA;
+    border-left: 1px solid #DCDCDA;
+}
+
+#water-drainage-calculator div.open-type table.calc-result tr.second td, #water-drainage-calculator div.closed-type table.calc-result tr.second td {
+    border-bottom: none;
+}
+
+#water-drainage-calculator div.open-type table.calc-result td:last-child, #water-drainage-calculator div.closed-type table.calc-result td:last-child {
+    border-right: none;
+}
+
+#water-drainage-calculator div.open-type table.calc-result td div.name, #water-drainage-calculator div.closed-type table.calc-result td div.name {
+    height: 60px;
+    width: 1000px; /* hack to center */
+    display: table-cell;
+    vertical-align: bottom;
+}
+
+#water-drainage-calculator div.open-type table.calc-result td:first-child, #water-drainage-calculator div.closed-type table.calc-result td:first-child {
+    width: 40%;
+    text-align: left;
+    border-left: none;
+    height: 100%;
+}
+
+#water-drainage-calculator div.open-type table.calc-result td div.value {
+    font-family: 'Museo Cyrl';
+    color: #6BC4CB;
+    font-size: 20px;
+    padding-top: 12px;
+}
+
+#water-drainage-calculator div.closed-type table.calc-result td div.value {
+    font-family: 'Museo Cyrl';
+    color: #0A74B7;
+    font-size: 20px;
+    padding-top: 12px;
+}
+
+#water-drainage-calculator div.open-type div.total {
+    height: 60px;
+    padding: 20px 0 20px 20px;
+    background-color: #6BC4CB;
+    color: #fff;
+}
+
+#water-drainage-calculator div.closed-type div.total {
+    height: 60px;
+    padding: 20px 0 20px 20px;
+    background-color: #0A74B7;
+    color: #fff;
+}
+
+#water-drainage-calculator div.open-type div.total .name, #water-drainage-calculator div.closed-type div.total .name {
+    font-family: 'Inter', sans-serif;
+    float: left;
+}
+
+#water-drainage-calculator div.open-type div.total .value, #water-drainage-calculator div.closed-type div.total .value {
+    float: right;
+    margin-top: -8px;
+}
+
+#water-drainage-calculator div.open-type div.total .value .item, #water-drainage-calculator div.closed-type div.total .value .item {
+    font-size: 22px;
+    padding: 8px 15px;
+    border-left: 1px solid rgba(255, 255, 255, .2);
+}
+
+#water-drainage-calculator div.after-calc-links {
+    font-family: 'Inter', sans-serif;
+}
+
+#water-drainage-calculator div.after-calc-links a {
+    text-decoration: none;
+    border: 1px solid #0A74B7;
+    padding: 15px 20px;
+    margin-left: 10px;
+    color: #0A74B7;
+}
+
+#water-drainage-calculator div.after-calc-links a img {
+    padding-right: 3px;
+}
+
+#water-drainage-calculator .email-result-send {
+    width: 570px;
+    float: right;
+    margin-top: -30px;
+	display: none;
+}
+
+#water-drainage-calculator .email-result-send .email-wrapper {
+    padding-right: 20px;
+	order: 1;
+    width: 60%;
+}
+
+#water-drainage-calculator .email-result-send .input-group input {
+    border-right: 1px solid #DCDCDA;
+}
+
+#water-drainage-calculator .email-result-send .input-group input.active {
+    border-right: 1px solid #0A74B7;
+}
+
+#water-drainage-calculator .email-result-send .input-group input.error {
+    border-right: 1px solid #E6615E;
+}
+
+#water-drainage-calculator .email-result-send .send-email-button {
+    order: 2;
+    margin-top: 30px;
+    height: 50px;
+    width: 40%;
+    padding: 14px;
+}
+
+@media (max-width: 991px) {
+	#water-drainage-calculator div.table-wrapper {
+		overflow-x: scroll;
+	}
+	#water-drainage-calculator div.open-type div.total, #water-drainage-calculator div.closed-type div.total {
+		height: auto;
+	}
+	#water-drainage-calculator div.open-type div.total .name, #water-drainage-calculator div.closed-type div.total .name,
+	#water-drainage-calculator div.open-type div.total .value, #water-drainage-calculator div.closed-type div.total .value {
+		float: none;
+	}
+	#water-drainage-calculator div.total .value {
+		border: none;
+	}
+	#water-drainage-calculator div.open-type div.total .value .item.open_total_no_vat, 
+	#water-drainage-calculator div.closed-type div.total .value .item.close_total_no_vat {
+		margin-top: 15px;
+	}
+	#water-drainage-calculator div.open-type div.total .value .item, #water-drainage-calculator div.closed-type div.total .value .item {
+		border: none;
+		padding: 0;
+		display: block;
+	}
+	#water-drainage-calculator div.after-calc-links a {
+		display: inline-block;
+	}
+	#water-drainage-calculator div.after-calc-links a.send-to-email {
+		margin-top: 10px;
+	}
+	#water-drainage-calculator .email-result-send {
+		width: auto;
+		flex-flow: column nowrap;
+	}
+	#water-drainage-calculator .email-result-send .email-wrapper {
+		width: 100%;
+		padding: 0;
+		order: 1;
+	}
+	#water-drainage-calculator .email-result-send .send-email-button {
+		width: 100%;
+		padding: 0;
+		order: 2;
+		padding-top: 12px;
+	}
+}
