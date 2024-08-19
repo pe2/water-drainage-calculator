@@ -1,5 +1,6 @@
 <?php
 
+use Bitrix\Main\Application;
 use Bitrix\Main\Engine\ActionFilter\Authentication;
 use Bitrix\Main\Engine\Contract\Controllerable;
 use Bitrix\Main\Mail\Event;
@@ -40,7 +41,7 @@ class WaterDrainageCalculatorComponent extends CBitrixComponent implements Contr
                     Authentication::class,
                 ],
             ],
-			'send' => [
+            'send' => [
                 '-prefilters' => [
                     Authentication::class,
                 ],
@@ -106,10 +107,11 @@ class WaterDrainageCalculatorComponent extends CBitrixComponent implements Contr
         /** @noinspection PhpExpressionResultUnusedInspection */
         $this->getSignedParameters();   // Get all params in $this->arParams
 
+        $oRequest = Application::getInstance()->getContext()->getRequest();
         $oSendResult = Event::send(array(
             'EVENT_NAME' => $this->arParams['EMAIL_EVENT_NAME'],
             'LID' => 's1',
-            'C_FIELDS' => $_REQUEST
+            'C_FIELDS' => $oRequest->getPostList()
         ));
 
         $resultArray = array('success' => $oSendResult->isSuccess());
@@ -122,14 +124,16 @@ class WaterDrainageCalculatorComponent extends CBitrixComponent implements Contr
      */
     private function calculateTotalWaterSupply(): void
     {
-        $totalWaterSupply = floatval($_REQUEST['drinkingWater']) + $this->calculateSupplyByArea();
+        $oRequest = Application::getInstance()->getContext()->getRequest();
+
+        $totalWaterSupply = floatval($oRequest->get('drinkingWater')) + $this->calculateSupplyByArea();
 
         $this->resultArray['water_supply_tariff'] = $this->arParams['M3_TARIFF'];
-		/*
+        /*
         $this->resultArray['water_supply_volume'] = sprintf('%.2f', $totalWaterSupply);
         $this->resultArray['water_supply_price_no_vat'] = sprintf('%.2f', $totalWaterSupply * $this->arParams['M3_TARIFF']);
-		$this->resultArray['water_supply_price_with_vat'] = sprintf('%.2f', $totalWaterSupply * $this->arParams['M3_TARIFF'] * $this->getVat()); */
-		$this->resultArray['water_supply_volume'] = number_format($totalWaterSupply, 2, '.', ' ');
+        $this->resultArray['water_supply_price_with_vat'] = sprintf('%.2f', $totalWaterSupply * $this->arParams['M3_TARIFF'] * $this->getVat()); */
+        $this->resultArray['water_supply_volume'] = number_format($totalWaterSupply, 2, '.', ' ');
         $this->resultArray['water_supply_price_no_vat'] = number_format($totalWaterSupply * $this->arParams['M3_TARIFF'], 2, '.', ' ');
         $this->resultArray['water_supply_price_with_vat'] = number_format($totalWaterSupply * $this->arParams['M3_TARIFF'] * $this->getVat(), 2, '.', ' ');
     }
@@ -141,22 +145,26 @@ class WaterDrainageCalculatorComponent extends CBitrixComponent implements Contr
      */
     private function calculateSupplyByArea(): float
     {
+        $oRequest = Application::getInstance()->getContext()->getRequest();
+
         $result = 0.0;
-        if (!empty($_REQUEST['asphalt']) || !empty($_REQUEST['soils']) || !empty($_REQUEST['pavement']) || !empty($_REQUEST['lawn'])) {
-            if (0.0 < floatval($_REQUEST['asphalt'])) {
-                $result += $_REQUEST['asphalt'] * self::AREA_ASPHALT_CONSTANT;
+        if (!empty($oRequest->get('asphalt')) || !empty($oRequest->get('soils')) ||
+            !empty($oRequest->get('pavement')) || !empty($oRequest->get('lawn'))
+        ) {
+            if (0.0 < floatval($oRequest->get('asphalt'))) {
+                $result += $oRequest->get('asphalt') * self::AREA_ASPHALT_CONSTANT;
             }
-            if (0.0 < floatval($_REQUEST['soils'])) {
-                $result += $_REQUEST['soils'] * self::AREA_SOILS_CONSTANT;
+            if (0.0 < floatval($oRequest->get('soils'))) {
+                $result += $oRequest->get('soils') * self::AREA_SOILS_CONSTANT;
             }
-            if (0.0 < floatval($_REQUEST['pavement'])) {
-                $result += $_REQUEST['pavement'] * self::AREA_PAVEMENT_CONSTANT;
+            if (0.0 < floatval($oRequest->get('pavement'))) {
+                $result += $oRequest->get('pavement') * self::AREA_PAVEMENT_CONSTANT;
             }
-            if (0.0 < floatval($_REQUEST['lawn'])) {
-                $result += $_REQUEST['lawn'] * self::AREA_LAWN_CONSTANT;
+            if (0.0 < floatval($oRequest->get('lawn'))) {
+                $result += $oRequest->get('lawn') * self::AREA_LAWN_CONSTANT;
             }
         } else {
-            $result = $_REQUEST['landArea'] * self::DEFAULT_AREA_SUPPLY_CONSTANT;
+            $result = $oRequest->get('landArea') * self::DEFAULT_AREA_SUPPLY_CONSTANT;
         }
 
         return $result;
@@ -177,21 +185,23 @@ class WaterDrainageCalculatorComponent extends CBitrixComponent implements Contr
      */
     private function calculatePlumbing(): void
     {
-        $this->resultArray['plumbing_length'] = $_REQUEST['distance'];
+        $oRequest = Application::getInstance()->getContext()->getRequest();
+
+        $this->resultArray['plumbing_length'] = $oRequest->get('distance');
         // Open type
         $tariff = $this->arParams['OPEN' . $this->defineTubeDiameter()];
-		/*
-        $this->resultArray['open_plumbing_price_no_vat'] = sprintf('%.2f', $_REQUEST['distance'] * $tariff);
-		$this->resultArray['open_plumbing_price_with_vat'] = sprintf('%.2f', $_REQUEST['distance'] * $tariff * $this->getVat()); */
-		$this->resultArray['open_plumbing_price_no_vat'] = number_format($_REQUEST['distance'] * $tariff, 2, '.', ' ');
-        $this->resultArray['open_plumbing_price_with_vat'] = number_format($_REQUEST['distance'] * $tariff * $this->getVat(), 2, '.', ' ');
+        /*
+        $this->resultArray['open_plumbing_price_no_vat'] = sprintf('%.2f', $oRequest['distance'] * $tariff);
+        $this->resultArray['open_plumbing_price_with_vat'] = sprintf('%.2f', $oRequest['distance'] * $tariff * $this->getVat()); */
+        $this->resultArray['open_plumbing_price_no_vat'] = number_format($oRequest['distance'] * $tariff, 2, '.', ' ');
+        $this->resultArray['open_plumbing_price_with_vat'] = number_format($oRequest['distance'] * $tariff * $this->getVat(), 2, '.', ' ');
         // Close type
         $tariff = $this->arParams['CLOSE' . $this->defineTubeDiameter()];
-		/*
-        $this->resultArray['close_plumbing_price_no_vat'] = sprintf('%.2f', $_REQUEST['distance'] * $tariff);
-		$this->resultArray['close_plumbing_price_with_vat'] = sprintf('%.2f', $_REQUEST['distance'] * $tariff * $this->getVat()); */
-		$this->resultArray['close_plumbing_price_no_vat'] = number_format($_REQUEST['distance'] * $tariff, 2, '.', ' ');
-		$this->resultArray['close_plumbing_price_with_vat'] = number_format($_REQUEST['distance'] * $tariff * $this->getVat(), 2, '.', ' ');
+        /*
+        $this->resultArray['close_plumbing_price_no_vat'] = sprintf('%.2f', $oRequest['distance'] * $tariff);
+        $this->resultArray['close_plumbing_price_with_vat'] = sprintf('%.2f', $oRequest['distance'] * $tariff * $this->getVat()); */
+        $this->resultArray['close_plumbing_price_no_vat'] = number_format($oRequest['distance'] * $tariff, 2, '.', ' ');
+        $this->resultArray['close_plumbing_price_with_vat'] = number_format($oRequest['distance'] * $tariff * $this->getVat(), 2, '.', ' ');
     }
 
     /**
@@ -218,7 +228,7 @@ class WaterDrainageCalculatorComponent extends CBitrixComponent implements Contr
      */
     private function calculateTotals()
     {
-		/*
+        /*
         $this->resultArray['open_total_no_vat'] = sprintf('%.2f', $this->resultArray['water_supply_price_no_vat'] +
             $this->resultArray['open_plumbing_price_no_vat']);
         $this->resultArray['open_total_with_vat'] = sprintf('%.2f', $this->resultArray['water_supply_price_with_vat'] +
@@ -226,33 +236,33 @@ class WaterDrainageCalculatorComponent extends CBitrixComponent implements Contr
         $this->resultArray['close_total_no_vat'] = sprintf('%.2f', $this->resultArray['water_supply_price_no_vat'] +
             $this->resultArray['close_plumbing_price_no_vat']);
         $this->resultArray['close_total_with_vat'] = sprintf('%.2f', $this->resultArray['water_supply_price_with_vat'] +
-			$this->resultArray['close_plumbing_price_with_vat']); */
+            $this->resultArray['close_plumbing_price_with_vat']); */
 
-		$this->resultArray['open_total_no_vat'] = number_format(
-			$this->makeFloat($this->resultArray['water_supply_price_no_vat']) +
+        $this->resultArray['open_total_no_vat'] = number_format(
+            $this->makeFloat($this->resultArray['water_supply_price_no_vat']) +
             $this->makeFloat($this->resultArray['open_plumbing_price_no_vat']), 2, '.', ' ');
         $this->resultArray['open_total_with_vat'] = number_format(
-			$this->makeFloat($this->resultArray['water_supply_price_with_vat']) +
+            $this->makeFloat($this->resultArray['water_supply_price_with_vat']) +
             $this->makeFloat($this->resultArray['open_plumbing_price_with_vat']), 2, '.', ' ');
         $this->resultArray['close_total_no_vat'] = number_format(
-			$this->makeFloat($this->resultArray['water_supply_price_no_vat']) +
+            $this->makeFloat($this->resultArray['water_supply_price_no_vat']) +
             $this->makeFloat($this->resultArray['close_plumbing_price_no_vat']), 2, '.', ' ');
         $this->resultArray['close_total_with_vat'] = number_format(
-			$this->makeFloat($this->resultArray['water_supply_price_with_vat']) +
-			$this->makeFloat($this->resultArray['close_plumbing_price_with_vat']), 2, '.', ' ');
+            $this->makeFloat($this->resultArray['water_supply_price_with_vat']) +
+            $this->makeFloat($this->resultArray['close_plumbing_price_with_vat']), 2, '.', ' ');
     }
 
-	/**
-	 * Method converts string to float
-	 *
-	 * @param string $number
-	 *
-	 * @return flaot
-	 */
-	protected function makeFloat(string $number): float
-	{
-		return floatval(str_replace(array(',', ' '), '', $number));
-	}
+    /**
+     * Method converts string to float
+     *
+     * @param string $number
+     *
+     * @return float
+     */
+    protected function makeFloat(string $number): float
+    {
+        return floatval(str_replace(array(',', ' '), '', $number));
+    }
 
     /**
      * Method returns all needed params for actions
@@ -264,5 +274,4 @@ class WaterDrainageCalculatorComponent extends CBitrixComponent implements Contr
         return array('M3_TARIFF', 'VAT_VALUE', 'WATER_SUPPLY_THRESHOLD', 'OPEN_100_150', 'CLOSE_100_150', 'OPEN_150_200',
             'CLOSE_150_200', 'OPEN_200_250', 'CLOSE_200_250');
     }
-
 }
